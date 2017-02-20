@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html ng-app='todoAngular'>
+    <head>
+        <meta charset="utf-8">
+        <title>Todo - AngularJS</title>
+        <script type="text/javascript" src='angular.min.js'></script>
+        <script type="text/javascript">
+            var app = Angular.module('todoAngular', [])
+            app.controller('todoController', function($scope){
+                $scope.todos = []
+                $scope.todos.push($scope.newTask)
+            })
+        </script>
+    </head>
+    <body>
+        <div class="todo-container">
+            <div class='todoAdd'>
+                <input type="text" name="" placeholder="输入待做事项" ng-model='newTask'>
+                <button type="button" name="button">添加</button>
+            </div>
+            <div class="todo-show">
+                <div class="task" ng-repeat='todo in todos'>
+                    {{ todo }}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="http://cdn.bootcss.com/vue/1.0.20/vue.min.js"></script>
+    <title>Document</title>
+
+</head>
+<body id="app">
+    <div class="article">
+        <h3 class="title">
+            {{ article.title }}{{ article.fontSize }}PX
+        </h3>
+        <button v-on:click='article.fontSize+=1' class="zoom">
+            +
+        </button>
+        <p class="content">
+            {{ article.content }}
+        </p>
+    </div>
+    <div class="vFor">
+        <ul>
+            <li v-for='item in arr'>{{ item }}</li>
+        </ul>
+    </div>
+    <div class="vModel">
+        <input v-model="message" placeholder="edit me">
+        <p>Message is: {{ message }}</p>
+    </div>
+
+    <style>
+        .title {
+            font-size: {{ article.fontSize }}px;
+        }
+    </style>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data:{
+                article: {
+                    title: 'Hello Vue.js!',
+                    content: 'This is my first Vue app!',
+                    fontSize: 10
+                },
+                arr: ['string', 'int', 1, 2]
+            }
+        })
+    </script>
+</body>
+</html>
+/*
+** vue.js
+    轻量级的js库，数据驱动页面，与angular相似，时刻关注对象数据的变化
+** 基本套路
+    1. <script>引用Vue。js
+    2. body或div#appName，设置Vue的控制区域，与angular中ng-app一样。
+    3. 在body内添加script
+        <script>
+            var vm = new Vue({
+                el: '#appName',        # (1)
+                data: {                # (2)
+                    name: 'Allen',
+                    age: 18,
+                    artical: {
+                        title: 'Welcome',
+                        content: 'Hello world!'
+                    },
+                    jobs: ['engineer', 'assistant', 'teacher']
+                }，
+                methods: {            # (3)
+                    functionName: function(){
+                        alert(this.artical.title)
+                    }
+                },
+                ready: function() {   # (4)
+                    return this.functionName()
+                }，
+                computed: {            # (5)
+                    something: function(){
+                        return otherthing
+                    }
+                },
+            })
+            # (1)Vue所控制的区域
+            # (2)数据，可在appName范围内通过{{}}语法引用, data可以是任意类型
+            # (3)Vue方法都放置在methods内，形式如上
+            #（4）在页面加载完成时，调用ready函数。
+            # (5)可选，动态计算，其函数必须有返回值。可在需要的地方直接引用函数名{{something}}
+        </script>
+    %注意：Vue版本1和2在appName的位置有所不同，Vue2不再支持绑定到body以及html
+
+    4. {{ varName }} 方式引用data内的数据，如：
+        <div>
+            {{name}}
+            {{article.title}}
+            {{ jobs[0] }}
+        </div>
+    5. 指令v-model，进行数据绑定，在控制区域内使用，如：
+        <div class="vModel">
+            <input v-model="message" placeholder="edit me">
+            <p>Message is: {{ message }}</p>
+        </div>
+        在input输入框内输入数据，会在p内实时显示
+    %注意：单纯的这种方式，在Vue2版本下并未实现，Vue1版本支持
+
+    6. 指令v-for，对可迭代对象进行遍历，array object string number如：
+        <div class="vFor">
+            <span v-for='item in jobs'>{{item}}</span>
+            <span v-for='(key, value) in artical'>{{key}}:{{value}}</span>
+        </div>
+    %注意：指令也是扩展了HTML属性，与Angular是一样的
+
+    7. 事件绑定使用v-on: eventHandler='doSomething', 如：
+        <button v-on:click='a+=1'>{{a}}</button>
+        如果a有初始值，那么在点击时，a就会改变当前值
+        doSomething也可以是一个函数的调用，通常用法也是这样的
+    %注意：如果改变的是style样式的属性值，需要将style放置在appName的范围之内才能起作用
+
+    8.数据遍历的几种形式：
+        1). <div v-for='item in array'>{{item}}</div>
+            遍历数组内的项
+        2). <div v-for='(index, item) in array'>{{index}} : {{item}}</div>
+            遍历数组内的项，带索引index值
+        3). <div v-for='(key, value) in object'>{{key}} : {{value}}</div>
+            遍历对象内的键和值
+        4). <div v-for='value in object'>{{value}}</div>
+            遍历对象内的值
+        5). <div v-for='(key, value, index) in object'>{{key}} : {{value}}</div>
+            遍历对象内的键和值，已及第三个参数作为索引值
+        5). <div v-for='n in 10'>{{ n = n * 2 }}</div>
+            整数迭代
+    9.computed可用于制作过滤器：
+        computed: {
+            biggerThan: function() {
+                var men = function(height){
+                    return height > 10
+                }
+
+                return this.array.filter(men)
+            }
+        }
+        可用于过滤掉身高小于等于10的人，在相应出直接使用biggerThan即可。
+    10. Vue.js没有ajax方法，可用如下方法替代：
+        1）原声JS的XHR
+        2）jQuery库的ajax方法
+        3）fetch方法（以后可能会替代AJAX）
+*/

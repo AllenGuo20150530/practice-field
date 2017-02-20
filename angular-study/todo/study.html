@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='study'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src='angular.min.js'></script>
+    <title>Document</title>
+    <script>
+        var app = angular.module('study', [])
+        app.controller('tkbk', function($scope){
+            $scope.tkbkList = [
+                {name: '第衣名潮流男装男士短袖衬衫2016夏季薄款商务修身', price: 78.8, time: 1472565951383},
+        		{name: 'Heilan Home/海澜之家男士纯色短袖t恤 白色V领衣服', price: 68, time: 1473565961383},
+        		{name: '秋季新品男士衬衫男长袖衬衣纯棉修身型薄款商务休', price: 31.9, time: 1472565912383}
+            ]
+        })
+        app.controller('eventHandler', function($scope){
+            $scope.clickMe = function() {
+                alert('you clicked me!')
+            }
+        })
+        app.controller('hideShow', function($scope){
+            $scope.a = true
+        })
+    </script>
+</head>
+<body>
+    <!-- 模板 -->
+    <div ng-init='a=0; b=0'>
+        <input type="text" placeholder="输入第一个数字" ng-model='a'>
+        *
+        <input type="text" placeholder="输入第二个数字" ng-model='b'>
+        =
+        <span>结果是：{{ a * b }}</span>
+
+    </div>
+
+    <!-- 重复1 -->
+    <div>
+        <ul ng-init='arr=[1, 2, 3, 5, 6]'>
+            <li ng-repeat='item in arr'>{{ item }}</li>
+        </ul>
+    </div>
+
+    <!-- 重复2 -->
+    <div>
+        <ul ng-init="obj={name: 'allen', age: 18, job: 'engineer'}">
+            <li ng-repeat='(key, value) in obj'>{{ key }}: {{value}}</li>
+        </ul>
+    </div>
+
+    <!-- 重复3 -->
+    <div>
+        <ul ng-init="arr2=[{name: 'allen', age: 18, job: 'engineer'}, {name: 'nike', age: 15, job: 'teacher'}]">
+            <li ng-repeat='item in arr2'>{{ item.name }}: {{item.age}}: {{item.job}}</li>
+        </ul>
+    </div>
+
+    <!-- 淘宝商品列表 -->
+    <div ng-controller='tkbk'>
+        <ul ng-repeat='item in tkbkList'>
+            <li ng-repeat='value in item'>{{ value }}</li>
+        </ul>
+    </div>
+
+    <!-- 淘宝商品列表2 -->
+    <div ng-controller='tkbk'>
+        <ul ng-repeat='item in tkbkList'>
+            <span>{{ item.name }}</span><br>
+            <span>{{ item.price|currency}}</span><br>
+            <span>{{ item.time|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+        </ul>
+    </div>
+
+    <!-- 事件 -->
+    <div ng-controller='eventHandler'>
+        <button ng-click='clickMe()'>点我</button>
+    </div>
+    <!-- 显示 隐藏 -->
+    <div ng-controller='hideShow'>
+        <button ng-click='a=!a'>点我试试</button>
+        <div style='width:120px; height:120px; background:lightgrey;' ng-show='a'></div>
+    </div>
+</body>
+</html>

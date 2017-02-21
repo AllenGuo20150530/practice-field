@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!-- 使用flex样式，仿写简书的导航栏 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .nav-container {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 56px;
+            border-bottom: 1px solid #eee;
+        }
+        .navigator {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .right {
+            display: flex;
+            /*background-color: lightblue;*/
+            flex-basis: 250px;
+            align-items: center;
+            justify-content: space-between;
+            height: 56px;
+        }
+        .inside {
+            display: flex;
+            flex-grow: 1;
+            justify-content: flex-start;
+            align-items: center;
+            /*background-color: lightgrey;*/
+            width: 407px;
+        }
+        .left {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 140px;
+            height: 56px;
+
+        }
+        .logo {
+            font-size: 26px;
+            /* 增大或减小字间距 */
+            letter-spacing: 5px;
+            margin-left: 10px;
+            color: #EA6F5A;
+            cursor: pointer;
+        }
+        .inside-item  {
+            padding: 15px;
+            line-height: 26px;
+            font-size: 17px;
+            margin: 0px 5px;
+            cursor: pointer;
+        }
+        .discover {
+            margin: 0 5px 0 0;
+            color: #EA725E;
+        }
+        .search {
+            margin-left: 15px;
+            padding: 0 0px 0 20px;
+            width: 150px;
+            height: 36px;
+            font-size: 14px;
+            border: 1px solid #eee;
+            border-radius: 40px;
+            background: #eee;
+            transition: width .5s;
+            -moz-transition: width .5s;
+            -webkit-transition: width .5s;
+            -o-transition: width .5s;
+            cursor: auto;
+        }
+        .new-blog {
+            width: 100px;
+            height: 38px;
+            line-height: 24px;
+            margin: 0 20px;
+            border-radius: 4px;
+            font-size: 15px;
+            color: #fff;
+            background-color: #ea6f5a;
+            cursor: pointer;
+            border: none;
+        }
+        .font-setup {
+            color: #969696;
+            font-size: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-container">
+        <div class="navigator">
+            <div class="left">
+                <span class="logo">简书</span>
+            </div>
+            <div class="inside">
+                <span class="inside-item discover">发现</span>
+                <span class="inside-item following">关注</span>
+                <span class="inside-item message">消息</span>
+                <input type="text" class="inside-item search" placeholder="搜索">
+            </div>
+            <div class="right">
+                <span class="font-setup">Aa</span>
+                <img class="avatar" src="http://upload.jianshu.io/users/upload_avatars/4177528/8ab8a30819ec?imageMogr/thumbnail/120x120/quality/100" alt="头像">
+                <input type='button' class="new-blog" value='写文章'>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -7,6 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
+        /* 设定弹性元素垂直居中、元素间隔相等 */
+        .vertical-center {
+            align-items: center;
+            justify-content: space-between;
+        }
         .nav-container {
             position: fixed;
             top: 0;
@@ -16,33 +21,26 @@
         }
         .navigator {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
             width: 100%;
         }
         .right {
             display: flex;
             /*background-color: lightblue;*/
             flex-basis: 250px;
-            align-items: center;
-            justify-content: space-between;
             height: 56px;
         }
         .inside {
             display: flex;
             flex-grow: 1;
             justify-content: flex-start;
-            align-items: center;
             /*background-color: lightgrey;*/
             width: 407px;
         }
         .left {
             display: flex;
             justify-content: flex-start;
-            align-items: center;
             width: 140px;
             height: 56px;
-
         }
         .logo {
             font-size: 26px;
@@ -106,17 +104,17 @@
 </head>
 <body>
     <div class="nav-container">
-        <div class="navigator">
-            <div class="left">
+        <div class="navigator vertical-center">
+            <div class="left vertical-center">
                 <span class="logo">简书</span>
             </div>
-            <div class="inside">
+            <div class="inside vertical-center">
                 <span class="inside-item discover">发现</span>
                 <span class="inside-item following">关注</span>
                 <span class="inside-item message">消息</span>
                 <input type="text" class="inside-item search" placeholder="搜索">
             </div>
-            <div class="right">
+            <div class="right vertical-center">
                 <span class="font-setup">Aa</span>
                 <img class="avatar" src="http://upload.jianshu.io/users/upload_avatars/4177528/8ab8a30819ec?imageMogr/thumbnail/120x120/quality/100" alt="头像">
                 <input type='button' class="new-blog" value='写文章'>

@@ -104,6 +104,9 @@ var changeColor = function() {
     }
     return swapColor
 }
+// 由于anothorColor tempColor属于局部作用域中的局部变量，在全局环境中无法访问
+log(anothorColor)           // Uncaught ReferenceError: anothorColor is not defined
+log(tempColor)              // Uncaught ReferenceError: tempColor is not defined
 var swapColor = changeColor()
 swapColor()
 // changeColor()()
@@ -147,3 +150,17 @@ for (let k = 0; k < 2; k++) {
     log(k)              // 0 1
 }
 log(k)                  // VM473:4 Uncaught ReferenceError: k is not defined
+
+
+
+var i = 0
+// 在 局部作用域 中访问全局变量
+const showme = function() {
+    log(i)
+}
+showme()                // 0
+
+// 在 块级作用域 中访问全局变量
+for(; i < 2; i++) {
+    log(i)              // 0 1
+}

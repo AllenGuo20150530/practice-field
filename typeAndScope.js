@@ -38,6 +38,23 @@ log({a: 10} instanceof Object)      // true
 // 函数会是function
 // 数组会是object
 
+// string类型有两种定义方式，字面量和构造函数，其typeOf值不同
+var strA = 'abc'
+var strB = new String('abc')
+log(strA == strB)                   // true
+log(typeof strA, typeof strB)       // string object
+log(strA instanceof String)         // false
+log(strB instanceof String)         // true
+
+// 检测一个变量是否为string时，两种情况都要考虑，不能单纯使用typeOf来检测
+const stringType = function(str) {
+    if ((typeof str).toLowerCase() == 'string' || str instanceof String) {
+        // 'string'类型， 或是String对象实例
+        return true
+    } else {
+        return false
+    }
+}
 // JS中的堆和栈
 /*
     JS内存分为栈内存和堆内存

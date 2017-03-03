@@ -335,3 +335,190 @@ log('最终结果', sumRight)
     前一项 14 当前值 1 当前运算值 15
     最终结果 15
 */
+
+
+// Function类型
+// 声明方式
+function funcDef() {
+    log('Hello, little boy!')
+}
+// 赋值方式
+var funcVari = function() {
+    log('Welcome to world of JavaScript!')
+}
+funcDef()                       // Hello, little boy!
+funcVari()                      // Welcome to world of JavaScript!
+/*
+    声明式有个好处，就是可以在声明之前调用函数不会报错
+    而赋值方式会
+    这就是所谓的  变量声明提升
+    尽量在函数定义之后再使用，不要依赖变量声明提升
+    所有变量、函数等，养成习惯，先声明，再使用
+*/
+
+/*
+    函数名也是一个变量，里面保存着对函数的引用，即可以看作一个指针
+    因此可以对函数名赋值，当做参数传入另一个函数，甚至作为另一个函数的返回值
+*/
+var anotherFun = funcVari
+funcVari = null
+anotherFun()                    // Welcome to world of JavaScript!
+funcVari()                      // Uncaught TypeError: funcVari is not a function
+log(funcVari)                   // null
+// 因为funcVari值被设为null，不再指向函数了，故而值为null
+
+// 当做参数传入另一个函数，甚至作为另一个函数的返回值
+var someFunc = function(func) {
+    func()
+}
+someFunc(funcDef)               // Hello, little boy!
+
+// ，甚至作为另一个函数的返回值
+var sums = function(a) {
+    var sum = function(b) {
+        return a + b
+    }
+    return sum
+}
+// sums函数中定义的函数sum，被当作函数的返回值
+sums(10)(5)                     // 15
+// 上述函数也可以写成如下形式，当函数作为函数值时，可以使用匿名函数
+var sums = function(a) {
+    return function(b) {
+        return a + b
+    }
+}
+sums(10)(5)                     // 15
+
+/*
+    上述两个sums函数，虽然等价，但这里涉及到一个问题
+    JS中，函数不能重载
+    sums被在第二次定义后，第一次定义就不再有效
+    下面这个例子可能更直观
+*/
+var showMe = function() {
+    log("这是我第一次被定义")
+}
+var showMe = function() {
+    log("这是我第二次被定义")
+}
+showMe()                        // 这是我第二次被定义
+/*
+    这就导致一个问题，当两个函数同名时，会只使用最近一次定义的函数
+    所以在引用不同JS文件时，要注意函数同名的情况
+    解决这一问题的一个方法就是对JS文件进行封装
+    函数的调用以实例方法的形式来避免
+    当然，也尽力避免使用相同的函数名
+*/
+
+/*
+    函数属性 length， prototype
+    函数的length属性是函数的参数个数，0个参数，则function.length = 0
+    prototype中函有继承的toString, toLocaleString等方法，但也重写了
+    用处不多
+*/
+
+/*
+    函数内部对象this和arguments        及其重要
+    this指代的是当前函数所在的执行环境，也就是作用域。
+        当函数在全局环境中调用时，则this指向全局作用域
+        当函数在某个对象中，或局部作用域中执行时，this指向当前所在的作用域
+    arguments 类数组对象 中保存着所有传入函数的参数
+        arguments有个callee属性，指向函数，一般用于递归调用时
+*/
+var book = 'Code Complete'
+var showBook = function() {
+    log(this.book)
+}
+showBook()                                  // Code Complete
+
+var books = {
+    book: 'jQuery',
+    // 将 showBook指针赋值给books.show
+    show: showBook
+}
+books.show()                                // jQuery
+/*
+    显而易见，变量showBook和books.show指向的是同一个函数
+    函数的作用是输出this.book的名称
+    直接调用showBook函数时，其this指向当前 全局作用域，因此访问到的this.book是Code Complete
+    当作为方法books.show调用函数时，this指针已经指向books这个局部作用域
+        因而首先访问到的是books对象内部的book名称jQuery
+*/
+
+// arguments是一个类数组对象，它是一个对象，但是以数组的形式显示，并非数组
+var printSome = function(str1, str2) {
+    log(typeof arguments)                   // Object
+    log(arguments instanceof Array)         // false
+    log(arguments)                          // 【显示传入的参数】
+}
+
+// arguments.callee是一个指针，指向拥有这个arguments对象的函数
+var factorial = function(num) {
+    // 经典 阶乘函数 递归算法
+    if (num <= 1) {
+        return 1
+    } else {
+        return num * factorial(num - 1)
+    }
+}
+log(factorial(5))                   // 120
+// 如果用另一个变量指向这个函数
+var anotherFactorial = factorial
+factorial = null
+log(anotherFactorial(5))            // Uncaught TypeError: factorial is not a function
+// 使用callee属性来降低这种耦合性
+var factorial = function(num) {
+    // 经典 阶乘函数 递归算法
+    if (num <= 1) {
+        return 1
+    } else {
+        return num * arguments.callee(num - 1)
+    }
+}
+log(factorial(5))                   // 120
+var anotherFactorial = factorial
+factorial = null
+log(anotherFactorial(5))            // 120
+
+/*
+    bind(), call(), apply() 作用 与 区别
+    call()和apply()作用都是将函数的作用域改变，扩展了函数的作用域
+        在无参数传递时，两者完全相同
+        第一个参数都是将要作用的环境（作用域）
+        通过使this指针指向不同的执行环境而改变当前函数的作用域
+    不同之处在于，
+        apply()第二个参数是数组，或是arguments数组对象
+        call()的后面的参数，则是要把每个元素都分开传入
+
+    bind()方法，则是创建一个函数实例，并将this指向的作用域绑定到这个函数实例上
+        这样，在任何时候调用这个函数实例的时候，其this指向的都是绑定的那个作用域
+*/
+// 如我们定义的log函数，使用apply()方法，而不是call()方法，原因在于，我们不确定参数到底是什么
+var log = function() {
+    console.log.apply(console, arguments)
+}
+// 然后再看book的例子
+var book = 'Code Complete'
+var showBook = function() {
+    log(this.book)
+}
+var books = {
+    book: 'jQuery',
+}
+showBook.call(window)                       // Code Complete
+/* 将showBook函数的作用域通过this指针，指向books对象 */
+showBook.call(books)                        // jQuery
+showBook.apply(books)                       // jQuery
+
+/* bind() 方法 */
+var color = 'red'
+var anotherColor = {
+    color: 'blue'
+}
+var showColor = function() {
+    log(this.color)
+}
+var anotherShow = showColor.bind(anotherColor)
+// 将anotherColor绑定到函数实例anotherShow上之后，即便在全局作用域内调用，也会输出blue
+anotherShow()                               // blue

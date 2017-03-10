@@ -522,3 +522,63 @@ var showColor = function() {
 var anotherShow = showColor.bind(anotherColor)
 // 将anotherColor绑定到函数实例anotherShow上之后，即便在全局作用域内调用，也会输出blue
 anotherShow()                               // blue
+
+
+/*
+    基本包装类型
+        Boolean类型
+        Number类型
+        String类型
+*/
+
+// Boolean类型，建议不要使用
+var booleanObj = new Boolean(false)
+var booleanVal = false
+if(booleanObj) {
+    // boolean对象永远为TRUE。
+    log(booleanObj)                         // Boolean {[[PrimitiveValue]]: false}
+}
+if(booleanVal) {
+    log(!booleanVal)
+} else {
+    log(booleanVal)                         // false
+}
+
+// Number类型
+var numObj = new Number(10)
+log(typeof numObj)                          // object
+/* 转换成n进制字符串表示 */
+log(numObj.toString())                      // `10`
+log(numObj.toString(2))                     // `1010`
+log(numObj.toString(8))                     // `12`
+log(numObj.toString(10))                    // `10`
+log(numObj.toString(16))                    // `a`
+/* 转换成固定位小数字符串 */
+log(numObj.toFixed(2))                      // '10'
+/* 科学计数法 */
+log(numObj.toExponential(2))                // '1.00e+1'
+/* 返回上述两种最佳固定格式中的一种 */
+var num = 99
+log(num.toPrecision(1))                     // '1e+2'
+log(num.toPrecision(2))                     // '99'
+log(num.toPrecision(3))                     // '99.0'
+
+/* String 类型*/
+str.length
+str.charAt(index)
+str.charCodeAt(index)
+str[index]
+str.concat(str1, str2, ..., strn)           // 相当于字符串相加
+str = str1 + str2 + ... + strn
+str.slice(index1, index2)
+str.substring(index1, index2)
+str.substr(index1, index2)
+str.indexOf(value)
+str.lastIndexOf(value)
+str.trim()
+str.toLowerCase()
+str.toLocaleLowerCase()
+str.toLocaleUpperCase()
+str.toUpperCase()
+str.split()
+str1.localeCompare(str2)

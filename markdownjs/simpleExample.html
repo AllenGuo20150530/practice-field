@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <script src="https://cdn.bootcss.com/markdown.js/0.6.0-beta1/markdown.min.js"></script> -->
+    <script src="/usr/local/lib/node_modules/markdown/lib/markdown.js"></script>
+    <title>Document</title>
+    <style>
+        #id-div-preview {
+            width: 100px;
+            height: 100px;
+            border-style: solid;
+        }
+    </style>
+</head>
+<body>
+    <textarea name="" id="id-textarea" cols="10" rows="10" oninput="this.editor.update()"
+              placeholder="Type your markdown here "></textarea>
+    <div id="id-div-preview"></div>
+    <script>
+        function Editor(input, preview) {
+            this.update = function() {
+                preview.innerHTML = markdown.toHTML(input.value)
+            }
+            input.editor = this
+            this.update()
+        }
+        var input = document.querySelector('#id-textarea')
+        var preview = document.querySelector('#id-div-preview')
+        new Editor(input, preview)
+    </script>
+</body>
+</html>
